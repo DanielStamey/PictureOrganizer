@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using OrganizerMediaLibrary;
 
 namespace PictureOrganizer
 {
@@ -35,7 +36,8 @@ namespace PictureOrganizer
         #region Private Methods
         private void Init()
         {
-            
+            OrganizerMediaService organizerMediaService = new OrganizerMediaService();
+            organizerMediaService.TransferPictures(Settings.Default.SourcePath, Settings.Default.DestinationPath);
         }
 
         private void OpenControl(Control control, string name = "")

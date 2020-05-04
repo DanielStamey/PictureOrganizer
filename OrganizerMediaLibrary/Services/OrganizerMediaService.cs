@@ -5,15 +5,15 @@ using System.Text.RegularExpressions;
 
 namespace OrganizerMediaLibrary
 {
-    class OrganizerMediaService : IOrganizerMediaService
+    public class OrganizerMediaService : IOrganizerMediaService
     {
         #region Fields
-        const string _pictureRegex = ".(jpeg|jpg|png|tiff)$";
+        const string _pictureRegex = ".*[.](jpeg|jpg|png|bmp|tiff)$";
         #endregion
 
         #region Properties
-        public List<OrganizerPicture> SourceFiles { get; set; }
-        public List<OrganizerPicture> DestinationFiles { get; set; }
+        // public List<OrganizerPicture> SourceFiles { get; set; }
+        // public List<OrganizerPicture> DestinationFiles { get; set; }
         #endregion
 
         #region Constructors
