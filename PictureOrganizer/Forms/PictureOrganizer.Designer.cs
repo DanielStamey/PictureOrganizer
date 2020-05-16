@@ -33,7 +33,9 @@
             this.changeSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelControlContainer = new System.Windows.Forms.Panel();
+            this.mediaTransfer = new PictureOrganizer.Controls.MediaTransfer();
             this.menuStripPictureOrganizer.SuspendLayout();
+            this.panelControlContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStripPictureOrganizer
@@ -72,11 +74,20 @@
             // 
             // panelControlContainer
             // 
+            this.panelControlContainer.Controls.Add(this.mediaTransfer);
             this.panelControlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelControlContainer.Location = new System.Drawing.Point(0, 28);
             this.panelControlContainer.Name = "panelControlContainer";
             this.panelControlContainer.Size = new System.Drawing.Size(800, 422);
             this.panelControlContainer.TabIndex = 1;
+            // 
+            // mediaTransfer
+            // 
+            this.mediaTransfer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaTransfer.Location = new System.Drawing.Point(0, 0);
+            this.mediaTransfer.Name = "mediaTransfer";
+            this.mediaTransfer.Size = new System.Drawing.Size(800, 422);
+            this.mediaTransfer.TabIndex = 0;
             // 
             // FormPictureOrganizer
             // 
@@ -90,6 +101,7 @@
             this.Text = "Picture Organizer";
             this.menuStripPictureOrganizer.ResumeLayout(false);
             this.menuStripPictureOrganizer.PerformLayout();
+            this.panelControlContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,6 +113,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeSettingsToolStripMenuItem;
         private System.Windows.Forms.Panel panelControlContainer;
+        private Controls.MediaTransfer mediaTransfer;
     }
 }
 

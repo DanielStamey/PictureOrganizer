@@ -47,16 +47,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MediaTransfer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MediaTransfer.Designer.cs">
+      <DependentUpon>MediaTransfer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UserSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\UserSettings.Designer.cs">
       <DependentUpon>UserSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="PictureOrganizer.cs">
+    <Compile Include="Forms\HandleDuplicate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PictureOrganizer.Designer.cs">
+    <Compile Include="Forms\HandleDuplicate.Designer.cs">
+      <DependentUpon>HandleDuplicate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PictureOrganizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PictureOrganizer.Designer.cs">
       <DependentUpon>PictureOrganizer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -66,10 +78,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\MediaTransfer.resx">
+      <DependentUpon>MediaTransfer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UserSettings.resx">
       <DependentUpon>UserSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PictureOrganizer.resx">
+    <EmbeddedResource Include="Forms\HandleDuplicate.resx">
+      <DependentUpon>HandleDuplicate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PictureOrganizer.resx">
       <DependentUpon>PictureOrganizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

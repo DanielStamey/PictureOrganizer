@@ -5,52 +5,118 @@ using System.Text.RegularExpressions;
 
 namespace OrganizerMediaLibrary
 {
-    public class OrganizerMediaService : IOrganizerMediaService
+    public class OrganizerPictureService : IOrganizerMediaService
     {
         #region Fields
-        const string _pictureRegex = ".*[.](jpeg|jpg|png|bmp|tiff)$";
+        private const string _pictureExtensionRegex = "([.](jpeg|jpg|png|bmp|tiff))$";
+        private string _basePath;
         #endregion
 
         #region Properties
-        // public List<OrganizerPicture> SourceFiles { get; set; }
-        // public List<OrganizerPicture> DestinationFiles { get; set; }
+        public List<OrganizerPicture> SourcePictures { get; }
+        public List<OrganizerPicture> DestinationPictures { get; }
+        public string SubDirectory { get; set; } = "Pictures";
+        public int FileSizeThreshold { get; set; } = 500;
+        public string TransferAction { get; set; } = "Move";
+
         #endregion
 
         #region Constructors
-        public OrganizerMediaService()
+        public OrganizerPictureService(DirectoryInfo sourceDirectory, DirectoryInfo destinationDirectory)
         {
-
+            _basePath = destinationDirectory.FullName;
+            SourcePictures = GetAllPicturesFromDirectory(sourceDirectory).ToList();
+            DestinationPictures = GetAllPicturesFromDirectory(destinationDirectory).ToList();
         }
         #endregion
 
         #region Public Methods
-        public void TransferPictures(string sourcePath, string destinationPath)
+        public IEnumerable<OrganizerPicture> GetAllPicturesFromDirectory(string path)
         {
-            List<OrganizerPicture> sourcePictures = GetAllPictures(sourcePath).ToList();
-            List<OrganizerPicture> destinationPictures = GetAllPictures(destinationPath).ToList();
-
-
-        }
-        #endregion
-
-        #region Private Methods
-        private IEnumerable<OrganizerPicture> GetAllPictures(string path)
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
-
-            List<OrganizerPicture> files = directoryInfo.GetFiles()
-                .Where(f => Regex.IsMatch(f.Name, _pictureRegex, RegexOptions.IgnoreCase))
-                .Select(f => new OrganizerPicture(f))
-                .ToList();
-
-            DirectoryInfo[] directories = directoryInfo.GetDirectories();
-            foreach(DirectoryInfo di in directories)
+            if(Directory.Exists(path))
             {
-                files.AddRange(GetAllPictures(di.FullName));
+                DirectoryInfo directoryInfo = new DirectoryInfo(path);
+                return GetAllPicturesFromDirectory(directoryInfo);
+            }
+
+            return new List<OrganizerPicture>();
+        }
+
+        public IEnumerable<OrganizerPicture> GetAllPicturesFromDirectory(DirectoryInfo path)
+        {
+            List<OrganizerPicture> files = new List<OrganizerPicture>();
+
+            files = path.GetFiles()
+                    .Where(f => Regex.IsMatch(f.Name, _pictureExtensionRegex, RegexOptions.IgnoreCase))
+                    .Select(f => new OrganizerPicture(f))
+                    .ToList();
+
+            DirectoryInfo[] directories = path.GetDirectories();
+            foreach (DirectoryInfo di in directories)
+            {
+                files.AddRange(GetAllPicturesFromDirectory(di));
             }
 
             return files;
         }
+
+        public List<OrganizerPicture> GetPossibleDuplicates(OrganizerPicture sourcePicture)
+        {
+            // ToDo: This will be a huge part of the work for this application.
+
+            long maxSize = sourcePicture.Size + FileSizeThreshold;
+            long minSize = sourcePicture.Size - FileSizeThreshold;
+            List<OrganizerPicture> possibleDuplicates = DestinationPictures
+                .Where(d => (d.Size < maxSize && d.Size > minSize))
+                .ToList();
+            
+            return possibleDuplicates;
+        }
+
+        public void Transfer(OrganizerPicture picture)
+        {
+            if(TransferAction == "Move")
+            {
+                picture.MoveTo(GetDestinationFullName(picture));
+            }
+            else if (TransferAction == "Copy")
+            {
+                picture.CopyTo(GetDestinationFullName(picture));
+            }
+            DestinationPictures.Add(picture);
+        }
+
+        #endregion
+
+        #region Private Methods
+        private string GetDestinationFullName(OrganizerPicture organizerPicture)
+        {
+            string directory = GetDestinationDirectory(organizerPicture);
+            string name = GetDestinationName(directory, organizerPicture.Name);
+            return $"{directory}\\{name}";
+        }
+        private string GetDestinationDirectory(OrganizerPicture organizerPicture)
+        {
+            string destinationDirectory = $"{_basePath}{(!string.IsNullOrEmpty(SubDirectory) ? $"\\{SubDirectory}\\" : "\\")}{organizerPicture.GetDatePath()}";
+            
+            if (!Directory.Exists(destinationDirectory))
+            {
+                Directory.CreateDirectory(destinationDirectory);
+            }
+            return destinationDirectory;
+        }
+
+        private string GetDestinationName(string basePath, string name)
+        {
+            string fullName = $"{basePath}\\{name}";
+            if (File.Exists(fullName))
+            {
+                string newName = Regex.Replace(name, _pictureExtensionRegex, "(1)$1", RegexOptions.IgnoreCase);
+                return GetDestinationName(basePath, newName);
+            }
+            return name;
+        }
+
         #endregion
     }
 }

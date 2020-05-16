@@ -46,5 +46,53 @@ namespace PictureOrganizer {
                 this["DestinationPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Pictures")]
+        public string PicturesPathName {
+            get {
+                return ((string)(this["PicturesPathName"]));
+            }
+            set {
+                this["PicturesPathName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Videos")]
+        public string VideosPathName {
+            get {
+                return ((string)(this["VideosPathName"]));
+            }
+            set {
+                this["VideosPathName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int FileSizeThreshold1 {
+            get {
+                return ((int)(this["FileSizeThreshold1"]));
+            }
+            set {
+                this["FileSizeThreshold1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Move")]
+        public string TransferAction {
+            get {
+                return ((string)(this["TransferAction"]));
+            }
+            set {
+                this["TransferAction"] = value;
+            }
+        }
     }
 }

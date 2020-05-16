@@ -8,5 +8,17 @@
     <Setting Name="DestinationPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="PicturesPathName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Pictures</Value>
+    </Setting>
+    <Setting Name="VideosPathName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Videos</Value>
+    </Setting>
+    <Setting Name="FileSizeThreshold1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="TransferAction" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Move</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
