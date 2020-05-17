@@ -16,7 +16,7 @@ namespace PictureOrganizer
         public FormPictureOrganizer()
         {
             InitializeComponent();
-
+            
             Init();
         }
 
@@ -54,14 +54,19 @@ namespace PictureOrganizer
             if (Directory.Exists(sourcePath) && Directory.Exists(destinationPath))
             {
                 OrganizerPictureService mediaService = new OrganizerPictureService(new DirectoryInfo(sourcePath), new DirectoryInfo(destinationPath));
+                mediaTransfer.progressBarTransfer.Maximum = mediaService.SourcePictures.Count;
+                mediaTransfer.progressBarTransfer.Value = 0;
 
                 foreach (OrganizerPicture sourcePicture in mediaService.SourcePictures)
                 {
+                    mediaTransfer.progressBarTransfer.Value++;
                     List<OrganizerPicture> possibleDups = mediaService.GetPossibleDuplicates(sourcePicture);
                     if (possibleDups.Count > 0)
                     {
                         using (HandleDuplicate handleDuplicate = new HandleDuplicate(sourcePicture, possibleDups))
                         {
+                            //handleDuplicate.Parent = this;
+                            handleDuplicate.StartPosition = FormStartPosition.CenterParent;
                             DialogResult result = handleDuplicate.ShowDialog();
                             switch (result)
                             {

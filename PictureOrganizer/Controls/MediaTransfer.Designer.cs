@@ -30,11 +30,13 @@
         {
             this.panelTransferControls = new System.Windows.Forms.Panel();
             this.buttonTransfer = new System.Windows.Forms.Button();
+            this.progressBarTransfer = new System.Windows.Forms.ProgressBar();
             this.panelTransferControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTransferControls
             // 
+            this.panelTransferControls.Controls.Add(this.progressBarTransfer);
             this.panelTransferControls.Controls.Add(this.buttonTransfer);
             this.panelTransferControls.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelTransferControls.Location = new System.Drawing.Point(0, 375);
@@ -52,6 +54,14 @@
             this.buttonTransfer.Text = "Transfer";
             this.buttonTransfer.UseVisualStyleBackColor = true;
             // 
+            // progressBarTransfer
+            // 
+            this.progressBarTransfer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressBarTransfer.Location = new System.Drawing.Point(0, 0);
+            this.progressBarTransfer.Name = "progressBarTransfer";
+            this.progressBarTransfer.Size = new System.Drawing.Size(360, 29);
+            this.progressBarTransfer.TabIndex = 2;
+            // 
             // MediaTransfer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -68,5 +78,6 @@
 
         private System.Windows.Forms.Panel panelTransferControls;
         public System.Windows.Forms.Button buttonTransfer;
+        public System.Windows.Forms.ProgressBar progressBarTransfer;
     }
 }

@@ -69,6 +69,13 @@ namespace OrganizerMediaLibrary
             List<OrganizerPicture> possibleDuplicates = DestinationPictures
                 .Where(d => (d.Size < maxSize && d.Size > minSize))
                 .ToList();
+
+            if(possibleDuplicates.Count > 0)
+            {
+                possibleDuplicates = possibleDuplicates
+                    .Where(d => d.Hash == sourcePicture.Hash)
+                    .ToList();
+            }
             
             return possibleDuplicates;
         }
