@@ -60,18 +60,20 @@ namespace PictureOrganizer
                     List<OrganizerPicture> possibleDups = mediaService.GetPossibleDuplicates(sourcePicture);
                     if (possibleDups.Count > 0)
                     {
-                        HandleDuplicate handleDuplicate = new HandleDuplicate(sourcePicture, possibleDups);
-                        DialogResult result = handleDuplicate.ShowDialog();
-                        switch (result)
+                        using (HandleDuplicate handleDuplicate = new HandleDuplicate(sourcePicture, possibleDups))
                         {
-                            case DialogResult.No:
-                                {
-                                    continue;
-                                }
-                            case DialogResult.Cancel:
-                                {
-                                    return;
-                                }
+                            DialogResult result = handleDuplicate.ShowDialog();
+                            switch (result)
+                            {
+                                case DialogResult.No:
+                                    {
+                                        continue;
+                                    }
+                                case DialogResult.Cancel:
+                                    {
+                                        return;
+                                    }
+                            }
                         }
                     }
                     mediaService.Transfer(sourcePicture);
@@ -81,6 +83,7 @@ namespace PictureOrganizer
 
         private void OpenControl(Control control, string name = "")
         {
+            panelControlContainer.Controls[0].Visible = false;
             if (!string.IsNullOrEmpty(name))
             {
                 control.Name = name;
@@ -92,6 +95,7 @@ namespace PictureOrganizer
         private void CloseControl(Control control)
         {
             panelControlContainer.Controls.Remove(control);
+            panelControlContainer.Controls[0].Visible = true;
         }
         #endregion
 
